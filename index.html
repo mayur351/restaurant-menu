@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Restaurant Menu</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body { font-family: Arial; padding: 10px; }
+    h2 { border-bottom: 1px solid #ccc; }
+    .item { display: flex; justify-content: space-between; margin: 5px 0; }
+  </style>
+</head>
+<body>
+
+<h1>🍽️ Menu</h1>
+<div id="menu"></div>
+
+<script>
+const API = "PASTE_YOUR_SHEET_API_HERE";
+
+fetch(API)
+  .then(res => res.json())
+  .then(data => {
+    const menuDiv = document.getElementById("menu");
+
+    const categories = {};
+
+    data.forEach(item => {
+      if(item.available !== "TRUE") return;
+
+      if(!categories[item.category]) {
+        categories[item.category] = [];
+      }
+      categories[item.category].push(item);
+    });
+
+    for(const category in categories) {
+      const section = document.createElement("div");
+      section.innerHTML = <h2>${category}</h2>;
+
+      categories[category].forEach(item => {
+        const div = document.createElement("div");
+        div.className = "item";
+        div.innerHTML = <span>${item.name}</span><span>₹${item.price}</span>;
+        section.appendChild(div);
+      });
+
+      menuDiv.appendChild(section);
+    }
+  });
+</script>
+
+</body>
+</html>
