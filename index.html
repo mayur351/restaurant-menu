@@ -4,20 +4,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Third Place Brew Menu</title>
-
   <style>
     :root {
-      --black: #0b0b0b;
-      --charcoal: #191919;
-      --graphite: #2a2a2a;
-      --paper: #fbfbf8;
-      --paper-strong: #ffffff;
-      --ink: #101010;
-      --muted: #666666;
-      --line: #d7d7d2;
-      --line-dark: #2f2f2f;
-      --smoke: #f1f1ee;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.18);
+      --bg: #080808;
+      --card: #161616;
+      --ink: #f7f7f2;
+      --muted: #aaa;
+      --line: #3a3a3a;
     }
 
     * {
@@ -26,8 +19,8 @@
 
     html,
     body {
-      overflow-x: hidden;
       width: 100%;
+      overflow-x: hidden;
     }
 
     body {
@@ -35,159 +28,59 @@
       margin: 0;
       color: var(--ink);
       font-family: "Segoe UI", Arial, sans-serif;
-      background:
-        linear-gradient(135deg, rgba(255, 255, 255, 0.9), rgba(241, 241, 238, 0.94)),
-        linear-gradient(180deg, #ffffff, #eeeeea);
-    }
-
-    body::before {
-      position: fixed;
-      inset: 18px;
-      z-index: -1;
-      border: 1px solid rgba(0, 0, 0, 0.16);
-      box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.62);
-      content: "";
-      pointer-events: none;
+      background: radial-gradient(circle at top, #2a2a2a, var(--bg) 48%);
     }
 
     .shell {
-      width: min(1240px, calc(100% - 32px));
-      max-width: 100%;
-      margin: 0 auto;
-      padding: 10px 0;
-    }
-
-    .variant-nav {
-      display: flex;
-      gap: 6px;
-      overflow-x: auto;
-      padding: 0 0 8px;
-      color: var(--ink);
-      font-size: 0.68rem;
-      font-weight: 900;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-      scrollbar-width: none;
-    }
-
-    .variant-nav::-webkit-scrollbar {
-      display: none;
-    }
-
-    .variant-nav a {
-      flex: 0 0 auto;
-      padding: 6px 8px;
-      border: 1px solid var(--line-dark);
-      color: var(--ink);
-      background: var(--paper-strong);
-      text-decoration: none;
-      white-space: nowrap;
-    }
-
-    .variant-nav a.active {
-      color: var(--paper-strong);
-      background: var(--black);
+      width: min(1180px, 100% - 18px);
+      margin: auto;
+      padding: 8px 0;
     }
 
     .masthead {
       display: grid;
-      grid-template-columns: 74px minmax(0, 1fr) auto;
-      gap: 14px;
+      grid-template-columns: 70px minmax(0, 1fr) auto;
+      gap: 12px;
       align-items: center;
-      margin-bottom: 10px;
-      padding: 8px 0 10px;
-      border-bottom: 1px solid var(--line);
-      background: linear-gradient(90deg, rgba(0, 0, 0, 0.045), rgba(255, 255, 255, 0));
+      padding: 12px 0;
     }
 
     .logo {
-      width: 74px;
-      height: 46px;
+      width: 70px;
+      height: 44px;
       object-fit: contain;
-      mix-blend-mode: multiply;
-    }
-
-    .heading {
-      min-width: 0;
-    }
-
-    .eyebrow {
-      margin: 0 0 2px;
-      color: var(--graphite);
-      font-size: 0.66rem;
-      font-weight: 800;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
+      filter: invert(1);
     }
 
     h1 {
       margin: 0;
-      font-size: clamp(1.35rem, 3vw, 2.35rem);
-      font-weight: 500;
-      letter-spacing: 0;
-      line-height: 1;
+      font-size: clamp(1.35rem, 4vw, 2.8rem);
+      font-weight: 600;
     }
 
-    .subtitle {
-      max-width: 560px;
-      margin: 5px 0 0;
+    .tagline {
+      margin: 3px 0 0;
       color: var(--muted);
-      font-size: 0.82rem;
-      line-height: 1.35;
+      font-size: 0.76rem;
     }
 
-    .header-actions {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .phone {
+    .call {
       padding: 8px 10px;
-      border: 1px solid var(--line);
-      color: var(--paper-strong);
-      background: linear-gradient(180deg, var(--graphite), var(--black));
-      font-size: 0.78rem;
-      font-weight: 800;
+      color: #111;
+      background: #fff;
+      font-weight: 900;
       text-decoration: none;
       white-space: nowrap;
-      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
     }
 
-    .status {
-      display: grid;
-      gap: 0;
-      min-width: 78px;
-      padding: 7px 9px;
-      border: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.72);
-      text-align: center;
-    }
-
-    .status strong {
-      font-size: 0.98rem;
-      font-weight: 800;
-    }
-
-    .status span {
-      color: var(--muted);
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
-    }
-
-    .menu-book {
+    .menu-shell {
       display: flex;
       flex-direction: column;
-      height: calc(100svh - 92px);
+      height: calc(100svh - 102px);
       min-height: 520px;
-      overflow: hidden;
-      border: 1px solid rgba(0, 0, 0, 0.22);
-      background:
-        linear-gradient(180deg, rgba(255, 255, 255, 0.92), rgba(251, 251, 248, 0.96)),
-        var(--paper);
-      box-shadow: var(--shadow);
+      border: 1px solid #555;
+      background: linear-gradient(180deg, var(--card), #101010);
+      box-shadow: 0 30px 90px rgba(0, 0, 0, 0.65);
     }
 
     .toolbar {
@@ -195,545 +88,323 @@
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      min-height: 52px;
-      padding: 8px 10px;
+      min-height: 56px;
+      padding: 10px 12px;
       border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, rgba(0, 0, 0, 0.055), rgba(255, 255, 255, 0.9)),
-        rgba(255, 255, 255, 0.72);
-    }
-
-    .page-title {
-      display: grid;
-      gap: 4px;
-      min-width: 0;
+      background: #0f0f0f;
     }
 
     #pageTitle {
       margin: 0;
-      overflow: hidden;
-      font-size: clamp(0.98rem, 3vw, 1.28rem);
-      font-weight: 700;
-      text-overflow: ellipsis;
-      white-space: nowrap;
+      font-size: 1rem;
     }
 
     #pageMeta {
       color: var(--muted);
-      font-size: 0.75rem;
-      font-weight: 700;
+      font-size: 0.72rem;
+      font-weight: 800;
     }
 
     .controls {
       display: flex;
       flex: 0 0 auto;
-      gap: 10px;
+      gap: 8px;
     }
 
-    .nav-button {
-      display: inline-grid;
-      place-items: center;
-      width: 38px;
-      height: 38px;
-      border: 1px solid var(--line);
+    .controls button {
+      width: 36px;
+      height: 36px;
+      border: 1px solid #777;
       border-radius: 50%;
-      color: var(--ink);
-      background: linear-gradient(180deg, var(--paper-strong), var(--smoke));
+      color: #fff;
+      background: #191919;
+      font-size: 20px;
       cursor: pointer;
-      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
     }
 
-    .nav-button:hover:not(:disabled),
-    .nav-button:focus-visible {
-      border-color: var(--black);
-      background: var(--paper-strong);
-      outline: none;
-      transform: translateY(-1px);
-    }
-
-    .nav-button:disabled {
-      opacity: 0.34;
+    .controls button:disabled {
+      opacity: 0.35;
       cursor: not-allowed;
     }
 
     .viewport {
-      overflow: hidden;
       flex: 1;
       min-height: 0;
-      max-width: 100%;
+      overflow: hidden;
       touch-action: pan-y;
       overscroll-behavior-x: contain;
     }
 
     .pages {
       display: flex;
-      height: 100%;
       width: 100%;
-      max-width: 100%;
-      transition: transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+      height: 100%;
+      transition: transform 0.42s cubic-bezier(0.22, 1, 0.36, 1);
       will-change: transform;
     }
 
-    .page {
-      display: grid;
+    .menu-page {
       flex: 0 0 100%;
-      width: 100%;
-      max-width: 100%;
-      min-width: 100%;
+      display: grid;
       grid-template-columns: minmax(0, 1fr);
       grid-template-rows: auto minmax(0, 1fr);
-      min-height: 0;
+      width: 100%;
+      min-width: 100%;
+      max-width: 100%;
       overflow-x: hidden;
       overflow-y: auto;
-      background:
-        linear-gradient(90deg, rgba(0, 0, 0, 0.03), transparent 28%, rgba(0, 0, 0, 0.025)),
-        var(--paper);
     }
 
-    .page-panel {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
+    .page-strip {
+      display: grid;
+      grid-template-columns: 38px minmax(0, 1fr);
       gap: 12px;
+      align-items: center;
       width: 100%;
+      min-width: 0;
       max-width: 100%;
-      min-width: 0;
-      min-height: 58px;
-      padding: 10px 14px;
+      padding: 10px 12px;
       overflow: hidden;
-      border-bottom: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, var(--black), var(--charcoal) 48%, #444444);
-      color: var(--paper-strong);
+      color: #111;
+      background: #fff;
     }
 
-    .page-panel > div {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      flex: 1 1 auto;
-      min-width: 0;
-    }
-
-    .page-number {
-      display: inline-grid;
+    .page-strip > span {
+      display: grid;
       place-items: center;
-      flex: 0 0 auto;
       width: 38px;
       height: 38px;
-      border: 1px solid rgba(255, 255, 255, 0.34);
+      min-width: 38px;
+      min-height: 38px;
+      aspect-ratio: 1;
+      border: 1px solid #111;
       border-radius: 50%;
-      background: rgba(255, 255, 255, 0.12);
-      font-size: 0.92rem;
-      font-weight: 800;
+      font-weight: 900;
+      line-height: 1;
     }
 
-    .page-panel h2 {
-      flex: 0 0 auto;
+    .page-strip div {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .page-strip h2 {
       margin: 0;
-      font-size: clamp(1rem, 3vw, 1.55rem);
-      font-weight: 650;
-      line-height: 1;
+      font-size: 1rem;
+      line-height: 1.1;
+    }
+
+    .page-strip p {
+      max-width: 100%;
+      margin: 2px 0 0;
+      overflow: hidden;
+      color: #555;
+      font-size: 0.7rem;
+      line-height: 1.2;
+      text-overflow: ellipsis;
       white-space: nowrap;
     }
 
-    .page-panel p {
-      min-width: 0;
-      margin: 0;
-      color: rgba(255, 255, 255, 0.72);
-      font-size: 0.78rem;
-      font-weight: 650;
-      line-height: 1.35;
-      overflow: hidden;
-      text-overflow: ellipsis;
-    }
-
-    .category-list {
+    .category-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 16px 28px;
+      gap: 14px 26px;
       align-content: start;
       width: 100%;
       min-width: 0;
-      max-width: 100%;
       padding: 16px;
-      overflow-x: hidden;
     }
 
     .category {
-      display: grid;
-      gap: 7px;
-      align-content: start;
       min-width: 0;
+      padding: 10px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.035);
     }
 
     .category h3 {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      margin: 0;
-      color: var(--ink);
-      font-size: 0.74rem;
-      font-weight: 900;
-      letter-spacing: 0.1em;
+      margin: 0 0 6px;
+      color: #fff;
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
       text-transform: uppercase;
-    }
-
-    .category h3::after {
-      flex: 1;
-      height: 1px;
-      background: var(--line);
-      content: "";
     }
 
     .item {
       display: grid;
-      grid-template-columns: minmax(0, 1fr) minmax(72px, auto);
-      gap: 10px;
-      align-items: start;
+      grid-template-columns: minmax(0, 1fr) 60px;
+      gap: 8px;
       min-width: 0;
-      max-width: 100%;
       padding: 7px 0;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+      border-bottom: 1px solid #303030;
     }
 
-    .item.has-dual-price,
-    .item:has(.prices.two-column) {
-      grid-template-columns: minmax(0, 1fr) minmax(118px, auto);
+    .item.has-dual-price {
+      grid-template-columns: 1fr;
     }
 
-    .item-main {
+    .item-copy {
       min-width: 0;
       overflow: hidden;
     }
 
-    .item-title-row {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      align-items: center;
-    }
-
-    .item-name {
-      min-width: 0;
+    .item h4 {
       margin: 0;
-      font-size: 0.9rem;
-      font-weight: 760;
-      line-height: 1.22;
+      color: #fff;
+      font-size: 0.86rem;
       overflow-wrap: anywhere;
     }
 
-    .badge {
-      padding: 3px 7px;
-      border: 1px solid rgba(0, 0, 0, 0.28);
-      border-radius: 999px;
-      color: var(--paper-strong);
-      background: var(--black);
-      font-size: 0.68rem;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .description {
-      margin: 4px 0 0;
+    .item p {
+      margin: 3px 0 0;
       color: var(--muted);
-      font-size: 0.76rem;
-      line-height: 1.28;
+      font-size: 0.68rem;
+      line-height: 1.25;
       overflow-wrap: anywhere;
+    }
+
+    .item em {
+      display: inline-block;
+      margin-left: 5px;
+      padding: 2px 5px;
+      border: 1px solid #fff;
+      color: #fff;
+      font-size: 0.55rem;
+      font-style: normal;
     }
 
     .prices {
-      display: grid;
-      gap: 4px;
-      justify-items: end;
-      min-width: 72px;
-      max-width: 100%;
-      font-size: 0.86rem;
+      justify-self: end;
+      text-align: right;
+      color: #fff;
+      font-size: 0.78rem;
       font-weight: 900;
       white-space: nowrap;
-      justify-self: end;
+    }
+
+    .prices span {
+      display: block;
+      color: #999;
+      font-size: 0.52rem;
+      text-transform: uppercase;
     }
 
     .prices.two-column {
-      grid-template-columns: repeat(2, minmax(48px, 1fr));
-      min-width: 118px;
-      padding: 4px;
-      border: 1px solid var(--line);
-      background: linear-gradient(180deg, #ffffff, #f0f0ed);
-      justify-items: stretch;
-    }
-
-    .price-cell {
       display: grid;
-      gap: 2px;
-      text-align: right;
-    }
-
-    .price-label {
-      display: block;
-      color: var(--muted);
-      font-size: 0.58rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
+      grid-template-columns: 1fr 1fr;
+      width: min(168px, 100%);
+      padding: 4px;
+      border: 1px solid #555;
+      background: #111;
     }
 
     .dots {
       display: flex;
-      gap: 9px;
       justify-content: center;
+      gap: 8px;
       padding: 9px;
       border-top: 1px solid var(--line);
-      background:
-        linear-gradient(90deg, rgba(0, 0, 0, 0.055), rgba(255, 255, 255, 0.86)),
-        rgba(255, 255, 255, 0.64);
     }
 
-    .dot {
-      width: 10px;
-      height: 10px;
+    .dots button {
+      width: 8px;
+      height: 8px;
       border: 0;
       border-radius: 50%;
-      background: #b9b9b3;
+      background: #777;
       cursor: pointer;
-      transition: width 160ms ease, background 160ms ease;
     }
 
-    .dot.active {
-      width: 32px;
-      border-radius: 999px;
-      background: var(--ink);
+    .dots button.active {
+      width: 30px;
+      border-radius: 99px;
+      background: #fff;
     }
 
     .message {
-      flex: 0 0 100%;
-      padding: 56px 24px;
+      padding: 34px;
       color: var(--muted);
       text-align: center;
     }
 
-    @media (max-width: 860px) {
-      body::before {
-        inset: 7px;
-      }
-
-      .shell {
-        width: min(100% - 14px, 1240px);
-        padding: 7px 0;
-      }
-
-      .variant-nav {
-        padding-bottom: 7px;
-      }
-
+    @media (max-width: 720px) {
       .masthead {
         grid-template-columns: 52px minmax(0, 1fr) auto;
-        gap: 9px;
-        margin-bottom: 7px;
-        padding-bottom: 7px;
       }
 
       .logo {
         width: 52px;
-        height: 36px;
+        height: 34px;
       }
 
-      .eyebrow,
-      .subtitle,
-      .status {
+      .tagline {
         display: none;
       }
 
       h1 {
-        font-size: 1.12rem;
+        font-size: 1.1rem;
       }
 
-      .phone {
+      .call {
         padding: 7px 8px;
-        font-size: 0.69rem;
+        font-size: 0.7rem;
       }
 
-      .toolbar {
-        align-items: center;
-        flex-direction: row;
+      .menu-shell {
+        height: calc(100svh - 92px);
       }
 
-      .controls {
-        justify-content: flex-end;
-      }
-
-      .nav-button {
-        width: 36px;
-        height: 36px;
-      }
-
-      .menu-book {
-        height: calc(100svh - 70px);
-        min-height: 460px;
-      }
-
-      .page {
+      .category-grid {
         grid-template-columns: 1fr;
-        min-height: auto;
+        padding: 12px;
       }
 
-      .page-panel {
-        border-right: 0;
-        border-bottom: 1px solid var(--line);
-        min-height: 46px;
-        padding: 8px 10px;
-      }
-
-      .page-panel h2 {
-        font-size: 0.98rem;
-      }
-
-      .page-panel > p {
-        display: none;
-      }
-
-      .category-list {
-        grid-template-columns: 1fr;
-        gap: 12px;
-        padding: 11px 18px 14px 12px;
-      }
-    }
-
-    @media (max-width: 540px) {
-      #pageMeta {
-        font-size: 0.68rem;
-      }
-
-      .category h3 {
-        font-size: 0.69rem;
+      .category {
+        padding: 8px;
       }
 
       .item {
         grid-template-columns: minmax(0, 1fr) 54px;
-        gap: 6px;
-        width: 100%;
-        padding: 6px 0;
       }
 
-      .item.has-dual-price,
-      .item:has(.prices.two-column) {
+      .item.has-dual-price {
         grid-template-columns: 1fr;
       }
 
-      .prices {
-        min-width: 0;
-        width: 54px;
-        justify-items: end;
-        font-size: 0.78rem;
-        line-height: 1.12;
+      .item h4 {
+        font-size: 0.8rem;
       }
 
-      .prices.two-column {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        width: min(100%, 168px);
-        min-width: 0;
-        justify-self: end;
-      }
-
-      .price-label {
-        font-size: 0.54rem;
-      }
-
-      .item-title-row {
-        display: block;
-      }
-
-      .item-name {
-        display: inline;
-        font-size: 0.82rem;
-        line-height: 1.18;
-      }
-
-      .badge {
-        display: inline-block;
-        margin-left: 5px;
-        padding: 2px 6px;
-        font-size: 0.58rem;
-      }
-
-      .description {
+      .item p {
         display: -webkit-box;
-        margin-top: 3px;
         overflow: hidden;
         -webkit-box-orient: vertical;
         -webkit-line-clamp: 2;
-        font-size: 0.68rem;
-        line-height: 1.22;
-      }
-
-      .page-panel p {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        white-space: nowrap;
-      }
-    }
-
-    @media (max-width: 380px) {
-      .category-list {
-        padding: 9px 16px 9px 9px;
-      }
-
-      .item {
-        grid-template-columns: minmax(0, 1fr) 50px;
-      }
-
-      .prices {
-        width: 50px;
-        font-size: 0.74rem;
+        font-size: 0.66rem;
       }
     }
   </style>
 </head>
-
 <body>
   <main class="shell">
-    <nav class="variant-nav" aria-label="Design options">
-      <a class="active" href="index.html">Current</a>
-      <a href="concept-compact-luxe.html">Compact Luxe</a>
-      <a href="concept-editorial.html">Editorial</a>
-      <a href="concept-doodle-cafe.html">Doodles</a>
-      <a href="concept-night-card.html">Night Card</a>
-      <a href="concept-minimal-grid.html">Minimal Grid</a>
-    </nav>
     <header class="masthead">
       <img class="logo" src="file.svg" alt="Third Place Brew">
-      <div class="heading">
-        <p class="eyebrow">Cafe Menu</p>
+      <div>
         <h1>Third Place Brew</h1>
-        <p class="subtitle">Coffee, comfort food, and crafted cafe favorites presented with the calm detail of a modern neighborhood brew bar.</p>
+        <p class="tagline">High contrast rich dark menu.</p>
       </div>
-      <div class="header-actions">
-        <a class="phone" href="tel:+910000000000">Call: +91 00000 00000</a>
-        <div class="status" aria-live="polite">
-          <strong id="itemCount">--</strong>
-          <span id="statusText">Loading</span>
-        </div>
-      </div>
+      <a class="call" href="tel:+919372685137">Call</a>
     </header>
 
-    <section class="menu-book" aria-label="Third Place Brew menu">
+    <section class="menu-shell" aria-label="Third Place Brew menu">
       <div class="toolbar">
-        <div class="page-title">
-          <h2 id="pageTitle">Loading menu</h2>
-          <span id="pageMeta">Please wait</span>
+        <div>
+          <h2 id="pageTitle">Loading</h2>
+          <div id="pageMeta">Please wait</div>
         </div>
         <div class="controls">
-          <button class="nav-button" id="prevPage" type="button" aria-label="Previous menu page" title="Previous page">
-            <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
-          <button class="nav-button" id="nextPage" type="button" aria-label="Next menu page" title="Next page">
-            <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </button>
+          <button id="prevPage" type="button" aria-label="Previous page">&lsaquo;</button>
+          <button id="nextPage" type="button" aria-label="Next page">&rsaquo;</button>
         </div>
       </div>
 
@@ -743,20 +414,20 @@
 
       <div class="dots" id="dots" aria-label="Menu page selector"></div>
     </section>
+    <span id="itemCount" hidden></span>
   </main>
 
   <script>
     const API = "https://opensheet.elk.sh/1Ap-9y8Pu4uHO4q6UvA5r4kwJ9p0ic8vFN31sNYyRARs/Sheet1";
 
-    const pages = document.getElementById("pages");
-    const dots = document.getElementById("dots");
-    const viewport = document.getElementById("viewport");
-    const itemCount = document.getElementById("itemCount");
-    const statusText = document.getElementById("statusText");
+    const pagesEl = document.getElementById("pages");
+    const dotsEl = document.getElementById("dots");
     const pageTitle = document.getElementById("pageTitle");
     const pageMeta = document.getElementById("pageMeta");
+    const itemCount = document.getElementById("itemCount");
     const prevPage = document.getElementById("prevPage");
     const nextPage = document.getElementById("nextPage");
+    const viewport = document.getElementById("viewport");
 
     let currentPage = 0;
     let pageData = [];
@@ -801,61 +472,40 @@
       };
     }
 
-    function setPage(index) {
-      if (!pageData.length) {
-        currentPage = 0;
-        pages.style.transform = "translateX(0)";
-        pageTitle.textContent = "Menu unavailable";
-        pageMeta.textContent = "No pages found";
-        prevPage.disabled = true;
-        nextPage.disabled = true;
-        return;
-      }
-
-      currentPage = Math.max(0, Math.min(index, pageData.length - 1));
-      pages.style.transform = `translateX(-${currentPage * 100}%)`;
-
-      const active = pageData[currentPage];
-      pageTitle.textContent = `Page ${active.page}`;
-      pageMeta.textContent = `${active.itemCount} item${active.itemCount === 1 ? "" : "s"} across ${active.categories.length} section${active.categories.length === 1 ? "" : "s"}`;
-      prevPage.disabled = currentPage === 0;
-      nextPage.disabled = currentPage === pageData.length - 1;
-
-      [...dots.children].forEach((dot, dotIndex) => {
-        dot.classList.toggle("active", dotIndex === currentPage);
-        dot.setAttribute("aria-current", dotIndex === currentPage ? "true" : "false");
-      });
-    }
-
     function renderPrices(item) {
       const primary = money(item.price);
       const secondary = money(item.altPrice);
       const primaryLabel = item.priceLabel && item.priceLabel.toLowerCase() !== "price" ? escapeHtml(item.priceLabel) : "";
-      const secondaryLabel = item.altPriceLabel ? `<span class="price-label">${escapeHtml(item.altPriceLabel)}</span>` : "";
+      const secondaryLabel = item.altPriceLabel ? escapeHtml(item.altPriceLabel) : "";
 
       if (!primary && !secondary) return "";
 
       if (primary && secondary) {
         return `
           <div class="prices two-column">
-            <div class="price-cell">
-              ${primaryLabel ? `<span class="price-label">${primaryLabel}</span>` : ""}
-              <span>${primary}</span>
-            </div>
-            <div class="price-cell">
-              ${secondaryLabel}
-              <span>${secondary}</span>
-            </div>
+            <div class="price-cell">${primaryLabel ? `<span>${primaryLabel}</span>` : ""}<strong>${primary}</strong></div>
+            <div class="price-cell">${secondaryLabel ? `<span>${secondaryLabel}</span>` : ""}<strong>${secondary}</strong></div>
           </div>
         `;
       }
 
-      return `
-        <div class="prices">
-          ${primary ? `<div class="price-cell">${primaryLabel ? `<span class="price-label">${primaryLabel}</span>` : ""}<span>${primary}</span></div>` : ""}
-          ${secondary ? `<div class="price-cell">${secondaryLabel}<span>${secondary}</span></div>` : ""}
-        </div>
-      `;
+      return `<div class="prices"><div class="price-cell">${primaryLabel ? `<span>${primaryLabel}</span>` : ""}<strong>${primary || secondary}</strong></div></div>`;
+    }
+
+    function setPage(index) {
+      if (!pageData.length) return;
+      currentPage = Math.max(0, Math.min(index, pageData.length - 1));
+      pagesEl.style.transform = `translateX(-${currentPage * 100}%)`;
+
+      const active = pageData[currentPage];
+      pageTitle.textContent = `Page ${active.page}`;
+      pageMeta.textContent = `${active.itemCount} items / ${active.categories.length} sections`;
+      prevPage.disabled = currentPage === 0;
+      nextPage.disabled = currentPage === pageData.length - 1;
+
+      [...dotsEl.children].forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === currentPage);
+      });
     }
 
     function renderMenu(data) {
@@ -863,18 +513,6 @@
         .map(normalizeRow)
         .filter((item) => item.available && item.name)
         .sort((a, b) => a.page - b.page || a.sortOrder - b.sortOrder);
-
-      pages.innerHTML = "";
-      dots.innerHTML = "";
-      pageData = [];
-
-      if (!items.length) {
-        pages.innerHTML = '<div class="message">No available menu items found. Check the sheet availability column.</div>';
-        itemCount.textContent = "0";
-        statusText.textContent = "No items";
-        setPage(0);
-        return;
-      }
 
       const groupedPages = new Map();
       items.forEach((item) => {
@@ -896,71 +534,52 @@
         };
       });
 
-      pageData.forEach((menuPage, index) => {
-        const article = document.createElement("article");
-        article.className = "page";
-        article.setAttribute("aria-label", `Menu page ${menuPage.page}`);
-
-        const categoryNames = menuPage.categories.map((group) => group.category).join(", ");
-        const categoryMarkup = menuPage.categories.map((group) => `
-          <section class="category">
-            <h3>${escapeHtml(group.category)}</h3>
+      pagesEl.innerHTML = pageData.map((menuPage) => `
+        <article class="menu-page">
+          <header class="page-strip">
+            <span>${menuPage.page}</span>
             <div>
-              ${group.items.map((item) => `
-                <div class="item ${item.price && item.altPrice ? "has-dual-price" : ""}">
-                  <div class="item-main">
-                    <div class="item-title-row">
-                      <h4 class="item-name">${escapeHtml(item.name)}</h4>
-                      ${item.seasonal ? '<span class="badge">Seasonal</span>' : ""}
-                    </div>
-                    ${item.description ? `<p class="description">${escapeHtml(item.description)}</p>` : ""}
-                  </div>
-                  ${renderPrices(item)}
-                </div>
-              `).join("")}
-            </div>
-          </section>
-        `).join("");
-
-        article.innerHTML = `
-          <aside class="page-panel">
-            <div>
-              <div class="page-number">${menuPage.page}</div>
               <h2>Menu Page</h2>
-              <p>${escapeHtml(categoryNames)}</p>
+              <p>${escapeHtml(menuPage.categories.map((group) => group.category).join(", "))}</p>
             </div>
-            <p>Seasonal pours, signature plates, and familiar cafe comforts.</p>
-          </aside>
-          <div class="category-list">${categoryMarkup}</div>
-        `;
+          </header>
+          <div class="category-grid">
+            ${menuPage.categories.map((group) => `
+              <section class="category">
+                <h3>${escapeHtml(group.category)}</h3>
+                ${group.items.map((item) => `
+                  <div class="item ${item.price && item.altPrice ? "has-dual-price" : ""}">
+                    <div class="item-copy">
+                      <div class="item-name-row">
+                        <h4>${escapeHtml(item.name)}</h4>
+                        ${item.seasonal ? '<em>Seasonal</em>' : ""}
+                      </div>
+                      ${item.description ? `<p>${escapeHtml(item.description)}</p>` : ""}
+                    </div>
+                    ${renderPrices(item)}
+                  </div>
+                `).join("")}
+              </section>
+            `).join("")}
+          </div>
+        </article>
+      `).join("");
 
-        pages.appendChild(article);
-
-        const dot = document.createElement("button");
-        dot.className = "dot";
-        dot.type = "button";
-        dot.setAttribute("aria-label", `Open menu page ${menuPage.page}`);
-        dot.addEventListener("click", () => setPage(index));
-        dots.appendChild(dot);
-      });
-
-      itemCount.textContent = String(items.length);
-      statusText.textContent = "Items live";
+      dotsEl.innerHTML = pageData.map((menuPage, index) => `<button type="button" aria-label="Open page ${menuPage.page}" data-index="${index}"></button>`).join("");
+      dotsEl.querySelectorAll("button").forEach((dot) => dot.addEventListener("click", () => setPage(Number(dot.dataset.index))));
+      itemCount.textContent = `${items.length} items`;
       setPage(0);
     }
 
     prevPage.addEventListener("click", () => setPage(currentPage - 1));
     nextPage.addEventListener("click", () => setPage(currentPage + 1));
-
     document.addEventListener("keydown", (event) => {
       if (event.key === "ArrowLeft") setPage(currentPage - 1);
       if (event.key === "ArrowRight") setPage(currentPage + 1);
     });
-
     viewport.addEventListener("touchstart", (event) => {
       touchStartX = event.touches[0].clientX;
     }, { passive: true });
-
     viewport.addEventListener("touchend", (event) => {
       const delta = event.changedTouches[0].clientX - touchStartX;
       if (Math.abs(delta) > 48) setPage(currentPage + (delta < 0 ? 1 : -1));
@@ -972,15 +591,10 @@
         return res.json();
       })
       .then(renderMenu)
-      .catch((error) => {
-        console.error("Error loading menu:", error);
-        itemCount.textContent = "0";
-        statusText.textContent = "Offline";
-        pageTitle.textContent = "Menu failed to load";
-        pageMeta.textContent = "Check the linked sheet connection";
-        pages.innerHTML = '<div class="message">The live menu could not be loaded right now.</div>';
-        prevPage.disabled = true;
-        nextPage.disabled = true;
+      .catch(() => {
+        pageTitle.textContent = "Menu unavailable";
+        pageMeta.textContent = "Check the linked sheet";
+        pagesEl.innerHTML = '<div class="message">The live menu could not be loaded right now.</div>';
       });
   </script>
 </body>
