@@ -1,70 +1,943 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Restaurant Menu</title>
+  <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Third Place Brew Menu</title>
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 10px;
+    :root {
+      --margarita: #b8c490;
+      --margarita-dark: #7f8f5d;
+      --margarita-soft: #eef3df;
+      --paper: #fbfaf5;
+      --paper-strong: #ffffff;
+      --ink: #171717;
+      --muted: #666b60;
+      --line: #d8ddc4;
+      --gold: #b79b5f;
+      --gold-soft: #f3ead8;
+      --shadow: 0 22px 60px rgba(23, 23, 23, 0.12);
     }
 
-    h2 {
-      border-bottom: 1px solid #ccc;
-      margin-top: 25px;
+    * {
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      overflow-x: hidden;
+      width: 100%;
+    }
+
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--ink);
+      font-family: "Segoe UI", Arial, sans-serif;
+      background:
+        linear-gradient(135deg, rgba(255, 255, 255, 0.76), rgba(251, 250, 245, 0.94)),
+        linear-gradient(180deg, var(--margarita-soft), #fbf9f0 42%, #eef1df);
+    }
+
+    body::before {
+      position: fixed;
+      inset: 18px;
+      z-index: -1;
+      border: 1px solid rgba(127, 143, 93, 0.28);
+      box-shadow: inset 0 0 0 6px rgba(255, 255, 255, 0.34);
+      content: "";
+      pointer-events: none;
+    }
+
+    .shell {
+      width: min(1240px, calc(100% - 32px));
+      max-width: 100%;
+      margin: 0 auto;
+      padding: 10px 0;
+    }
+
+    .masthead {
+      display: grid;
+      grid-template-columns: 74px minmax(0, 1fr) auto;
+      gap: 14px;
+      align-items: center;
+      margin-bottom: 10px;
+      padding: 8px 0 10px;
+      border-bottom: 1px solid var(--line);
+      background: linear-gradient(90deg, rgba(184, 196, 144, 0.14), rgba(255, 255, 255, 0));
+    }
+
+    .logo {
+      width: 74px;
+      height: 46px;
+      object-fit: contain;
+      mix-blend-mode: multiply;
+    }
+
+    .heading {
+      min-width: 0;
+    }
+
+    .eyebrow {
+      margin: 0 0 2px;
+      color: var(--margarita-dark);
+      font-size: 0.66rem;
+      font-weight: 800;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.35rem, 3vw, 2.35rem);
+      font-weight: 500;
+      letter-spacing: 0;
+      line-height: 1;
+    }
+
+    .subtitle {
+      max-width: 560px;
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 0.82rem;
+      line-height: 1.35;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .phone {
+      padding: 8px 10px;
+      border: 1px solid var(--line);
+      color: var(--ink);
+      background: linear-gradient(180deg, #ffffff, var(--gold-soft));
+      font-size: 0.78rem;
+      font-weight: 800;
+      text-decoration: none;
+      white-space: nowrap;
+      box-shadow: 0 8px 20px rgba(127, 143, 93, 0.12);
+    }
+
+    .status {
+      display: grid;
+      gap: 0;
+      min-width: 78px;
+      padding: 7px 9px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.55);
+      text-align: center;
+    }
+
+    .status strong {
+      font-size: 0.98rem;
+      font-weight: 800;
+    }
+
+    .status span {
+      color: var(--muted);
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .menu-book {
+      display: flex;
+      flex-direction: column;
+      height: calc(100svh - 92px);
+      min-height: 520px;
+      overflow: hidden;
+      border: 1px solid rgba(127, 143, 93, 0.42);
+      background:
+        linear-gradient(180deg, rgba(255, 255, 255, 0.76), rgba(251, 250, 245, 0.94)),
+        var(--paper);
+      box-shadow: var(--shadow);
+    }
+
+    .toolbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      min-height: 52px;
+      padding: 8px 10px;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(184, 196, 144, 0.18), rgba(255, 255, 255, 0.86)),
+        rgba(255, 255, 255, 0.72);
+    }
+
+    .page-title {
+      display: grid;
+      gap: 4px;
+      min-width: 0;
+    }
+
+    #pageTitle {
+      margin: 0;
+      overflow: hidden;
+      font-size: clamp(0.98rem, 3vw, 1.28rem);
+      font-weight: 700;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    #pageMeta {
+      color: var(--muted);
+      font-size: 0.75rem;
+      font-weight: 700;
+    }
+
+    .controls {
+      display: flex;
+      flex: 0 0 auto;
+      gap: 10px;
+    }
+
+    .nav-button {
+      display: inline-grid;
+      place-items: center;
+      width: 38px;
+      height: 38px;
+      border: 1px solid var(--line);
+      border-radius: 50%;
+      color: var(--ink);
+      background: linear-gradient(180deg, var(--paper-strong), var(--margarita-soft));
+      cursor: pointer;
+      transition: transform 160ms ease, border-color 160ms ease, background 160ms ease;
+    }
+
+    .nav-button:hover:not(:disabled),
+    .nav-button:focus-visible {
+      border-color: var(--margarita-dark);
+      background: var(--margarita-soft);
+      outline: none;
+      transform: translateY(-1px);
+    }
+
+    .nav-button:disabled {
+      opacity: 0.34;
+      cursor: not-allowed;
+    }
+
+    .viewport {
+      overflow: hidden;
+      flex: 1;
+      min-height: 0;
+      max-width: 100%;
+      touch-action: pan-y;
+      overscroll-behavior-x: contain;
+    }
+
+    .pages {
+      display: flex;
+      height: 100%;
+      width: 100%;
+      max-width: 100%;
+      transition: transform 440ms cubic-bezier(0.22, 1, 0.36, 1);
+      will-change: transform;
+    }
+
+    .page {
+      display: grid;
+      flex: 0 0 100%;
+      width: 100%;
+      max-width: 100%;
+      min-width: 100%;
+      grid-template-columns: minmax(0, 1fr);
+      grid-template-rows: auto minmax(0, 1fr);
+      min-height: 0;
+      overflow-x: hidden;
+      overflow-y: auto;
+      background:
+        linear-gradient(90deg, rgba(184, 196, 144, 0.07), transparent 28%, rgba(183, 155, 95, 0.06)),
+        var(--paper);
+    }
+
+    .page-panel {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      width: 100%;
+      max-width: 100%;
+      min-width: 0;
+      min-height: 58px;
+      padding: 10px 14px;
+      overflow: hidden;
+      border-bottom: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(184, 196, 144, 0.96), rgba(243, 234, 216, 0.78), rgba(255, 255, 255, 0.9)),
+        var(--margarita);
+    }
+
+    .page-panel > div {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1 1 auto;
+      min-width: 0;
+    }
+
+    .page-number {
+      display: inline-grid;
+      place-items: center;
+      flex: 0 0 auto;
+      width: 38px;
+      height: 38px;
+      border: 1px solid rgba(23, 23, 23, 0.22);
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.38);
+      font-size: 0.92rem;
+      font-weight: 800;
+    }
+
+    .page-panel h2 {
+      flex: 0 0 auto;
+      margin: 0;
+      font-size: clamp(1rem, 3vw, 1.55rem);
+      font-weight: 650;
+      line-height: 1;
+      white-space: nowrap;
+    }
+
+    .page-panel p {
+      min-width: 0;
+      margin: 0;
+      color: rgba(23, 23, 23, 0.7);
+      font-size: 0.78rem;
+      font-weight: 650;
+      line-height: 1.35;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .category-list {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 16px 28px;
+      align-content: start;
+      width: 100%;
+      min-width: 0;
+      max-width: 100%;
+      padding: 16px;
+      overflow-x: hidden;
+    }
+
+    .category {
+      display: grid;
+      gap: 7px;
+      align-content: start;
+      min-width: 0;
+    }
+
+    .category h3 {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      margin: 0;
+      color: var(--ink);
+      font-size: 0.74rem;
+      font-weight: 900;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .category h3::after {
+      flex: 1;
+      height: 1px;
+      background: var(--line);
+      content: "";
     }
 
     .item {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(72px, auto);
+      gap: 10px;
+      align-items: start;
+      min-width: 0;
+      max-width: 100%;
+      padding: 7px 0;
+      border-bottom: 1px solid rgba(216, 221, 196, 0.72);
+    }
+
+    .item.has-dual-price,
+    .item:has(.prices.two-column) {
+      grid-template-columns: minmax(0, 1fr) minmax(118px, auto);
+    }
+
+    .item-main {
+      min-width: 0;
+      overflow: hidden;
+    }
+
+    .item-title-row {
       display: flex;
-      justify-content: space-between;
-      margin: 8px 0;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+
+    .item-name {
+      min-width: 0;
+      margin: 0;
+      font-size: 0.9rem;
+      font-weight: 760;
+      line-height: 1.22;
+      overflow-wrap: anywhere;
+    }
+
+    .badge {
+      padding: 3px 7px;
+      border: 1px solid rgba(127, 143, 93, 0.42);
+      border-radius: 999px;
+      color: #4f5d34;
+      background: var(--margarita-soft);
+      font-size: 0.68rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .description {
+      margin: 4px 0 0;
+      color: var(--muted);
+      font-size: 0.76rem;
+      line-height: 1.28;
+      overflow-wrap: anywhere;
+    }
+
+    .prices {
+      display: grid;
+      gap: 4px;
+      justify-items: end;
+      min-width: 72px;
+      max-width: 100%;
+      font-size: 0.86rem;
+      font-weight: 900;
+      white-space: nowrap;
+      justify-self: end;
+    }
+
+    .prices.two-column {
+      grid-template-columns: repeat(2, minmax(48px, 1fr));
+      min-width: 118px;
+      padding: 4px;
+      border: 1px solid var(--line);
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.78), rgba(238, 243, 223, 0.52));
+      justify-items: stretch;
+    }
+
+    .price-cell {
+      display: grid;
+      gap: 2px;
+      text-align: right;
+    }
+
+    .price-label {
+      display: block;
+      color: var(--muted);
+      font-size: 0.58rem;
+      font-weight: 800;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+    }
+
+    .dots {
+      display: flex;
+      gap: 9px;
+      justify-content: center;
+      padding: 9px;
+      border-top: 1px solid var(--line);
+      background:
+        linear-gradient(90deg, rgba(184, 196, 144, 0.18), rgba(255, 255, 255, 0.78)),
+        rgba(255, 255, 255, 0.64);
+    }
+
+    .dot {
+      width: 10px;
+      height: 10px;
+      border: 0;
+      border-radius: 50%;
+      background: #c5cdaa;
+      cursor: pointer;
+      transition: width 160ms ease, background 160ms ease;
+    }
+
+    .dot.active {
+      width: 32px;
+      border-radius: 999px;
+      background: var(--ink);
+    }
+
+    .message {
+      flex: 0 0 100%;
+      padding: 56px 24px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 860px) {
+      body::before {
+        inset: 7px;
+      }
+
+      .shell {
+        width: min(100% - 14px, 1240px);
+        padding: 7px 0;
+      }
+
+      .masthead {
+        grid-template-columns: 52px minmax(0, 1fr) auto;
+        gap: 9px;
+        margin-bottom: 7px;
+        padding-bottom: 7px;
+      }
+
+      .logo {
+        width: 52px;
+        height: 36px;
+      }
+
+      .eyebrow,
+      .subtitle,
+      .status {
+        display: none;
+      }
+
+      h1 {
+        font-size: 1.12rem;
+      }
+
+      .phone {
+        padding: 7px 8px;
+        font-size: 0.69rem;
+      }
+
+      .toolbar {
+        align-items: center;
+        flex-direction: row;
+      }
+
+      .controls {
+        justify-content: flex-end;
+      }
+
+      .nav-button {
+        width: 36px;
+        height: 36px;
+      }
+
+      .menu-book {
+        height: calc(100svh - 70px);
+        min-height: 460px;
+      }
+
+      .page {
+        grid-template-columns: 1fr;
+        min-height: auto;
+      }
+
+      .page-panel {
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+        min-height: 46px;
+        padding: 8px 10px;
+      }
+
+      .page-panel h2 {
+        font-size: 0.98rem;
+      }
+
+      .page-panel > p {
+        display: none;
+      }
+
+      .category-list {
+        grid-template-columns: 1fr;
+        gap: 12px;
+        padding: 11px 18px 14px 12px;
+      }
+    }
+
+    @media (max-width: 540px) {
+      #pageMeta {
+        font-size: 0.68rem;
+      }
+
+      .category h3 {
+        font-size: 0.69rem;
+      }
+
+      .item {
+        grid-template-columns: minmax(0, 1fr) 54px;
+        gap: 6px;
+        width: 100%;
+        padding: 6px 0;
+      }
+
+      .item.has-dual-price,
+      .item:has(.prices.two-column) {
+        grid-template-columns: 1fr;
+      }
+
+      .prices {
+        min-width: 0;
+        width: 54px;
+        justify-items: end;
+        font-size: 0.78rem;
+        line-height: 1.12;
+      }
+
+      .prices.two-column {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        width: min(100%, 168px);
+        min-width: 0;
+        justify-self: end;
+      }
+
+      .price-label {
+        font-size: 0.54rem;
+      }
+
+      .item-title-row {
+        display: block;
+      }
+
+      .item-name {
+        display: inline;
+        font-size: 0.82rem;
+        line-height: 1.18;
+      }
+
+      .badge {
+        display: inline-block;
+        margin-left: 5px;
+        padding: 2px 6px;
+        font-size: 0.58rem;
+      }
+
+      .description {
+        display: -webkit-box;
+        margin-top: 3px;
+        overflow: hidden;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 2;
+        font-size: 0.68rem;
+        line-height: 1.22;
+      }
+
+      .page-panel p {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+
+    @media (max-width: 380px) {
+      .category-list {
+        padding: 9px 16px 9px 9px;
+      }
+
+      .item {
+        grid-template-columns: minmax(0, 1fr) 50px;
+      }
+
+      .prices {
+        width: 50px;
+        font-size: 0.74rem;
+      }
     }
   </style>
 </head>
 
 <body>
+  <main class="shell">
+    <header class="masthead">
+      <img class="logo" src="file.svg" alt="Third Place Brew">
+      <div class="heading">
+        <p class="eyebrow">Cafe Menu</p>
+        <h1>Third Place Brew</h1>
+        <p class="subtitle">Coffee, comfort food, and crafted cafe favorites presented with the calm detail of a modern neighborhood brew bar.</p>
+      </div>
+      <div class="header-actions">
+        <a class="phone" href="tel:+910000000000">Call: +91 00000 00000</a>
+        <div class="status" aria-live="polite">
+          <strong id="itemCount">--</strong>
+          <span id="statusText">Loading</span>
+        </div>
+      </div>
+    </header>
 
-  <h1>🍽️ Menu</h1>
-  <div id="menu"></div>
+    <section class="menu-book" aria-label="Third Place Brew menu">
+      <div class="toolbar">
+        <div class="page-title">
+          <h2 id="pageTitle">Loading menu</h2>
+          <span id="pageMeta">Please wait</span>
+        </div>
+        <div class="controls">
+          <button class="nav-button" id="prevPage" type="button" aria-label="Previous menu page" title="Previous page">
+            <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M15 18l-6-6 6-6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+          <button class="nav-button" id="nextPage" type="button" aria-label="Next menu page" title="Next page">
+            <svg width="21" height="21" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M9 6l6 6-6 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="viewport" id="viewport">
+        <div class="pages" id="pages"></div>
+      </div>
+
+      <div class="dots" id="dots" aria-label="Menu page selector"></div>
+    </section>
+  </main>
 
   <script>
     const API = "https://opensheet.elk.sh/1Ap-9y8Pu4uHO4q6UvA5r4kwJ9p0ic8vFN31sNYyRARs/Sheet1";
 
-    fetch(API)
-      .then(res => res.json())
-      .then(data => {
-        const menuDiv = document.getElementById("menu");
-        const categories = {};
+    const pages = document.getElementById("pages");
+    const dots = document.getElementById("dots");
+    const viewport = document.getElementById("viewport");
+    const itemCount = document.getElementById("itemCount");
+    const statusText = document.getElementById("statusText");
+    const pageTitle = document.getElementById("pageTitle");
+    const pageMeta = document.getElementById("pageMeta");
+    const prevPage = document.getElementById("prevPage");
+    const nextPage = document.getElementById("nextPage");
 
-        data.forEach(item => {
-          if (item.available !== "TRUE") return;
+    let currentPage = 0;
+    let pageData = [];
+    let touchStartX = 0;
 
-          if (!categories[item.category]) {
-            categories[item.category] = [];
-          }
+    const escapeHtml = (value) => String(value || "").replace(/[&<>"']/g, (char) => ({
+      "&": "&amp;",
+      "<": "&lt;",
+      ">": "&gt;",
+      "\"": "&quot;",
+      "'": "&#039;"
+    }[char]));
 
-          categories[item.category].push(item);
+    const truthy = (value) => ["TRUE", "YES", "1", "Y"].includes(String(value || "").trim().toUpperCase());
+    const field = (row, names) => names.map((name) => row[name]).find((value) => String(value || "").trim() !== "") || "";
+    const numberValue = (value, fallback) => {
+      const number = Number(value);
+      return Number.isFinite(number) ? number : fallback;
+    };
+    const money = (value) => {
+      if (String(value || "").trim() === "") return "";
+      const number = Number(value);
+      return Number.isFinite(number) ? `&#8377;${number}` : escapeHtml(value);
+    };
+
+    function normalizeRow(row, index) {
+      const page = numberValue(field(row, ["page", "Page", "page_number", "Page Number"]), 1);
+      const sortOrder = numberValue(field(row, ["sort_order", "Sort Order", "order", "id"]), index + 1);
+
+      return {
+        page,
+        sortOrder,
+        category: field(row, ["category", "Category"]) || "House Specials",
+        name: field(row, ["name", "Name", "item", "Item"]),
+        description: field(row, ["description", "Description", "desc"]),
+        priceLabel: field(row, ["price_label", "Price Label"]) || "Price",
+        price: field(row, ["price", "Price"]),
+        altPriceLabel: field(row, ["alt_price_label", "Alt Price Label", "secondary_label"]),
+        altPrice: field(row, ["alt_price", "Alt Price", "secondary_price"]),
+        seasonal: truthy(field(row, ["seasonal", "Seasonal"])),
+        available: truthy(field(row, ["available", "Available"]))
+      };
+    }
+
+    function setPage(index) {
+      if (!pageData.length) {
+        currentPage = 0;
+        pages.style.transform = "translateX(0)";
+        pageTitle.textContent = "Menu unavailable";
+        pageMeta.textContent = "No pages found";
+        prevPage.disabled = true;
+        nextPage.disabled = true;
+        return;
+      }
+
+      currentPage = Math.max(0, Math.min(index, pageData.length - 1));
+      pages.style.transform = `translateX(-${currentPage * 100}%)`;
+
+      const active = pageData[currentPage];
+      pageTitle.textContent = `Page ${active.page}`;
+      pageMeta.textContent = `${active.itemCount} item${active.itemCount === 1 ? "" : "s"} across ${active.categories.length} section${active.categories.length === 1 ? "" : "s"}`;
+      prevPage.disabled = currentPage === 0;
+      nextPage.disabled = currentPage === pageData.length - 1;
+
+      [...dots.children].forEach((dot, dotIndex) => {
+        dot.classList.toggle("active", dotIndex === currentPage);
+        dot.setAttribute("aria-current", dotIndex === currentPage ? "true" : "false");
+      });
+    }
+
+    function renderPrices(item) {
+      const primary = money(item.price);
+      const secondary = money(item.altPrice);
+      const primaryLabel = item.priceLabel && item.priceLabel.toLowerCase() !== "price" ? escapeHtml(item.priceLabel) : "";
+      const secondaryLabel = item.altPriceLabel ? `<span class="price-label">${escapeHtml(item.altPriceLabel)}</span>` : "";
+
+      if (!primary && !secondary) return "";
+
+      if (primary && secondary) {
+        return `
+          <div class="prices two-column">
+            <div class="price-cell">
+              ${primaryLabel ? `<span class="price-label">${primaryLabel}</span>` : ""}
+              <span>${primary}</span>
+            </div>
+            <div class="price-cell">
+              ${secondaryLabel}
+              <span>${secondary}</span>
+            </div>
+          </div>
+        `;
+      }
+
+      return `
+        <div class="prices">
+          ${primary ? `<div class="price-cell">${primaryLabel ? `<span class="price-label">${primaryLabel}</span>` : ""}<span>${primary}</span></div>` : ""}
+          ${secondary ? `<div class="price-cell">${secondaryLabel}<span>${secondary}</span></div>` : ""}
+        </div>
+      `;
+    }
+
+    function renderMenu(data) {
+      const items = data
+        .map(normalizeRow)
+        .filter((item) => item.available && item.name)
+        .sort((a, b) => a.page - b.page || a.sortOrder - b.sortOrder);
+
+      pages.innerHTML = "";
+      dots.innerHTML = "";
+      pageData = [];
+
+      if (!items.length) {
+        pages.innerHTML = '<div class="message">No available menu items found. Check the sheet availability column.</div>';
+        itemCount.textContent = "0";
+        statusText.textContent = "No items";
+        setPage(0);
+        return;
+      }
+
+      const groupedPages = new Map();
+      items.forEach((item) => {
+        if (!groupedPages.has(item.page)) groupedPages.set(item.page, []);
+        groupedPages.get(item.page).push(item);
+      });
+
+      pageData = [...groupedPages.entries()].map(([page, pageItems]) => {
+        const categoryMap = new Map();
+        pageItems.forEach((item) => {
+          if (!categoryMap.has(item.category)) categoryMap.set(item.category, []);
+          categoryMap.get(item.category).push(item);
         });
 
-        for (const category in categories) {
-          const section = document.createElement("div");
-          section.innerHTML = `<h2>${category}</h2>`;
+        return {
+          page,
+          itemCount: pageItems.length,
+          categories: [...categoryMap.entries()].map(([category, categoryItems]) => ({ category, items: categoryItems }))
+        };
+      });
 
-          categories[category].forEach(item => {
-            const div = document.createElement("div");
-            div.className = "item";
-            div.innerHTML = `<span>${item.name}</span><span>₹${item.price}</span>`;
-            section.appendChild(div);
-          });
+      pageData.forEach((menuPage, index) => {
+        const article = document.createElement("article");
+        article.className = "page";
+        article.setAttribute("aria-label", `Menu page ${menuPage.page}`);
 
-          menuDiv.appendChild(section);
-        }
+        const categoryNames = menuPage.categories.map((group) => group.category).join(", ");
+        const categoryMarkup = menuPage.categories.map((group) => `
+          <section class="category">
+            <h3>${escapeHtml(group.category)}</h3>
+            <div>
+              ${group.items.map((item) => `
+                <div class="item ${item.price && item.altPrice ? "has-dual-price" : ""}">
+                  <div class="item-main">
+                    <div class="item-title-row">
+                      <h4 class="item-name">${escapeHtml(item.name)}</h4>
+                      ${item.seasonal ? '<span class="badge">Seasonal</span>' : ""}
+                    </div>
+                    ${item.description ? `<p class="description">${escapeHtml(item.description)}</p>` : ""}
+                  </div>
+                  ${renderPrices(item)}
+                </div>
+              `).join("")}
+            </div>
+          </section>
+        `).join("");
+
+        article.innerHTML = `
+          <aside class="page-panel">
+            <div>
+              <div class="page-number">${menuPage.page}</div>
+              <h2>Menu Page</h2>
+              <p>${escapeHtml(categoryNames)}</p>
+            </div>
+            <p>Seasonal pours, signature plates, and familiar cafe comforts.</p>
+          </aside>
+          <div class="category-list">${categoryMarkup}</div>
+        `;
+
+        pages.appendChild(article);
+
+        const dot = document.createElement("button");
+        dot.className = "dot";
+        dot.type = "button";
+        dot.setAttribute("aria-label", `Open menu page ${menuPage.page}`);
+        dot.addEventListener("click", () => setPage(index));
+        dots.appendChild(dot);
+      });
+
+      itemCount.textContent = String(items.length);
+      statusText.textContent = "Items live";
+      setPage(0);
+    }
+
+    prevPage.addEventListener("click", () => setPage(currentPage - 1));
+    nextPage.addEventListener("click", () => setPage(currentPage + 1));
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "ArrowLeft") setPage(currentPage - 1);
+      if (event.key === "ArrowRight") setPage(currentPage + 1);
+    });
+
+    viewport.addEventListener("touchstart", (event) => {
+      touchStartX = event.touches[0].clientX;
+    }, { passive: true });
+
+    viewport.addEventListener("touchend", (event) => {
+      const delta = event.changedTouches[0].clientX - touchStartX;
+      if (Math.abs(delta) > 48) setPage(currentPage + (delta < 0 ? 1 : -1));
+    }, { passive: true });
+
+    fetch(API)
+      .then((res) => {
+        if (!res.ok) throw new Error("Menu sheet failed to load");
+        return res.json();
       })
-      .catch(error => {
+      .then(renderMenu)
+      .catch((error) => {
         console.error("Error loading menu:", error);
+        itemCount.textContent = "0";
+        statusText.textContent = "Offline";
+        pageTitle.textContent = "Menu failed to load";
+        pageMeta.textContent = "Check the linked sheet connection";
+        pages.innerHTML = '<div class="message">The live menu could not be loaded right now.</div>';
+        prevPage.disabled = true;
+        nextPage.disabled = true;
       });
   </script>
-
 </body>
 </html>
