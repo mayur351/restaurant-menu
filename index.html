@@ -37,6 +37,35 @@
       padding: 8px 0;
     }
 
+    .variant-nav {
+      display: flex;
+      gap: 6px;
+      overflow-x: auto;
+      padding-bottom: 8px;
+      font-size: 11px;
+      font-weight: 600;
+      text-transform: uppercase;
+      scrollbar-width: none;
+    }
+
+    .variant-nav::-webkit-scrollbar {
+      display: none;
+    }
+
+    .variant-nav a {
+      flex: 0 0 auto;
+      padding: 6px 8px;
+      border: 1px solid #555;
+      color: #ddd;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .variant-nav a.active {
+      color: #000;
+      background: #fff;
+    }
+
     .masthead {
       display: grid;
       grid-template-columns: 70px minmax(0, 1fr) auto;
@@ -76,7 +105,7 @@
     .menu-shell {
       display: flex;
       flex-direction: column;
-      height: calc(100svh - 102px);
+      height: calc(100svh - 136px);
       min-height: 520px;
       border: 1px solid #555;
       background: linear-gradient(180deg, var(--card), #101010);
@@ -96,7 +125,9 @@
 
     #pageTitle {
       margin: 0;
+      font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
       font-size: 1rem;
+      font-weight: 300;
     }
 
     #pageMeta {
@@ -190,7 +221,9 @@
 
     .page-strip h2 {
       margin: 0;
+      font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
       font-size: 1rem;
+      font-weight: 300;
       line-height: 1.1;
     }
 
@@ -225,7 +258,9 @@
     .category h3 {
       margin: 0 0 6px;
       color: #fff;
+      font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
       font-size: 0.7rem;
+      font-weight: 300;
       letter-spacing: 0.14em;
       text-transform: uppercase;
     }
@@ -251,7 +286,9 @@
     .item h4 {
       margin: 0;
       color: #fff;
+      font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
       font-size: 0.86rem;
+      font-weight: 300;
       overflow-wrap: anywhere;
     }
 
@@ -351,7 +388,7 @@
       }
 
       .menu-shell {
-        height: calc(100svh - 92px);
+        height: calc(100svh - 124px);
       }
 
       .category-grid {
@@ -387,6 +424,15 @@
 </head>
 <body>
   <main class="shell">
+    <nav class="variant-nav" aria-label="Design options">
+      <a class="active" href="index.html">Current</a>
+      <a href="concept-compact-luxe.html">Compact Luxe</a>
+      <a href="concept-editorial.html">Editorial</a>
+      <a href="concept-doodle-cafe.html">Doodles</a>
+      <a href="concept-night-card.html">Night Card</a>
+      <a href="concept-minimal-grid.html">Minimal Grid</a>
+      <a href="concept-kraft-paper.html">Kraft Paper</a>
+    </nav>
     <header class="masthead">
       <img class="logo" src="file.svg" alt="Third Place Brew">
       <div>
