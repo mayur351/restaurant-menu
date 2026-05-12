@@ -163,8 +163,7 @@
 
     .page-strip {
       display: grid;
-      grid-template-columns: 40px minmax(0, 1fr);
-      gap: 10px;
+      grid-template-columns: minmax(0, 1fr);
       align-items: center;
       width: 100%;
       min-width: 0;
@@ -174,38 +173,15 @@
       background: #f0eadc;
     }
 
-    .page-strip > span {
-      display: grid;
-      place-items: center;
-      width: 40px;
-      height: 40px;
-      border: 1px solid #111;
-      border-radius: 50%;
-      font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
-      font-size: 1.1rem;
-      font-weight: 300;
-    }
-
-    .page-strip div {
-      min-width: 0;
-      overflow: hidden;
-    }
-
     .page-strip h2 {
       margin: 0;
       font-family: "Segoe UI Light", "Segoe UI", Arial, sans-serif;
-      font-size: 1.15rem;
+      font-size: 1.2rem;
       font-weight: 300;
-    }
-
-    .page-strip p {
-      margin: 2px 0 0;
-      overflow: hidden;
-      color: var(--muted);
-      font-size: 0.72rem;
-      font-weight: 300;
+      line-height: 1.15;
       text-overflow: ellipsis;
       white-space: nowrap;
+      overflow: hidden;
     }
 
     .category-grid {
@@ -341,20 +317,18 @@
       }
 
       .masthead {
-        grid-template-columns: 82px minmax(0, 1fr) auto;
+        grid-template-columns: 96px minmax(0, 1fr) auto;
         gap: 8px;
         padding: 8px 0 12px;
       }
 
       .logo {
-        width: 82px;
-        height: 52px;
+        width: 96px;
+        height: 60px;
       }
 
       h1 {
-        display: block;
-        font-size: clamp(1.35rem, 6.2vw, 1.85rem);
-        line-height: 0.98;
+        display: none;
       }
 
       .tagline {
@@ -461,12 +435,23 @@
       return Number.isFinite(number) ? `&#8377;${number}` : escapeHtml(value);
     };
 
+    const fallbackPageTitles = {
+      1: "Coffee Range",
+      2: "Tea Range, Mocktails and Slushes",
+      3: "House Shakes",
+      4: "Salads, Sandwiches, Snacks & Pizza",
+      5: "Meal Combos, Garlic bread & Pasta",
+      6: "Wraps burgers & toast",
+      7: "Desserts & waffles"
+    };
+
     function normalizeRow(row, index) {
       const page = numberValue(field(row, ["page", "Page", "page_number", "Page Number"]), 1);
       const sortOrder = numberValue(field(row, ["sort_order", "Sort Order", "order", "id"]), index + 1);
 
       return {
         page,
+        pageTitle: field(row, ["page_title", "Page Title", "page header", "Page Header"]) || fallbackPageTitles[page] || `Page ${page}`,
         sortOrder,
         category: field(row, ["category", "Category"]) || "House Specials",
         name: field(row, ["name", "Name", "item", "Item"]),
@@ -537,6 +522,7 @@
 
         return {
           page,
+          title: pageItems.find((item) => item.pageTitle)?.pageTitle || fallbackPageTitles[page] || `Page ${page}`,
           itemCount: pageItems.length,
           categories: [...categoryMap.entries()].map(([category, categoryItems]) => ({ category, items: categoryItems }))
         };
@@ -545,11 +531,7 @@
       pagesEl.innerHTML = pageData.map((menuPage) => `
         <article class="menu-page">
           <header class="page-strip">
-            <span>${menuPage.page}</span>
-            <div>
-              <h2>Menu Page</h2>
-              <p>${escapeHtml(menuPage.categories.map((group) => group.category).join(", "))}</p>
-            </div>
+            <h2>${escapeHtml(menuPage.title)}</h2>
           </header>
           <div class="category-grid">
             ${menuPage.categories.map((group) => `
